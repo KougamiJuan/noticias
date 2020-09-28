@@ -39,6 +39,14 @@ ion-spinner {
   --color:var( --ion-color-primary ) !important;
 }
 
-.infinite-loading-text{
+.infinite-loading-text {
   color: var( --ion-color-primary ) !important;
+}
+
+.action-custom ion-icon {
+  color: var( --ion-color-primary ) !important;
+}
+
+.ios .action-sheet-icon {
+  display: none !important;
 }

@@ -1,0 +1,13 @@
+.noticia-more {
+  position: absolute;
+  right: -10px;
+  top: -18px;
+  width: 12%;
+  ion-button {
+    font-size: 12px !important;
+  }
+  .test {
+    --padding-end: 0 !important;
+    --padding-start: 0 !important;
+  }
+}

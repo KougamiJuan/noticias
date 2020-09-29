@@ -6,7 +6,7 @@ import { config } from '../../config';
 export const environment = {
   production: false,
   apiKey: config.API_KEY,
-  apiUrl: 'https://newsapi.org/v2'
+  apiUrl: 'https://api.nytimes.com/svc/search/v2'
 };
 
 /*

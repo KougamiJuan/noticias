@@ -1,0 +1,18 @@
+.center {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  ion-icon {
+    font-size: 80px;
+  }
+  .text {
+    position: absolute;
+    &-top {
+      bottom: 63%;
+    }
+    &-bottom {
+      top: 63%;
+    }
+  }
+}

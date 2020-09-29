@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { IonSegment, IonInfiniteScroll } from '@ionic/angular';
 import { NoticiasService } from '../../services/noticias.service';
-import { Article } from '../../interfaces/interfaces';
+import { Doc } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-tab2',
@@ -12,8 +12,8 @@ export class Tab2Page {
   // El valor {static} con el valor true, permite que se muestre el valor seccionado por defecto
   @ViewChild(IonSegment, {static: true}) segment: IonSegment;
   @ViewChild(IonInfiniteScroll, {static: true}) infiniteScroll: IonInfiniteScroll;
-  categorias = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology'];
-  noticias: Article[] = [];
+  categorias = ['Business', 'Movies', 'National', 'Health', 'Science', 'Sports', 'Technology'];
+  noticias: Doc[] = [];
 
   constructor(private noticiasService: NoticiasService) { }
 
@@ -30,12 +30,12 @@ export class Tab2Page {
 
   cargarNoticias(categoria: string, event?: any) {
     this.noticiasService.getTopHeadlinesByCategory(categoria).subscribe(res => {
-      if (res.articles.length > 0) {
-        this.noticias.push(...res.articles);
+      if (res.response.docs.length > 0) {
+        this.noticias.push(...res.response.docs);
       }
       if (event) {
         event.target.complete();
-        event.target.disabled = (res.articles.length === 0);
+        event.target.disabled = (res.response.docs.length === 0);
       }
     });
   }

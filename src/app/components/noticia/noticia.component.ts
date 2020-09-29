@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Article } from '../../interfaces/interfaces';
+import { Doc, Multimedia } from '../../interfaces/interfaces';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
@@ -8,7 +8,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   styleUrls: ['./noticia.component.scss'],
 })
 export class NoticiaComponent implements OnInit {
-  @Input() noticia: Article;
+  originDomian = 'http://www.nytimes.com/';
+  @Input() noticia: Doc;
   @Input() indice: number;
 
   constructor(private iab: InAppBrowser) { }
@@ -16,8 +17,7 @@ export class NoticiaComponent implements OnInit {
   ngOnInit() {}
 
   abrirNoticia() {
-    console.log('Noticias', this.noticia.url);
-    this.iab.create(this.noticia.url, '_system');
+    this.iab.create(this.noticia.web_url, '_system');
   }
 
 }

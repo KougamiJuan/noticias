@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NoticiasService } from '../../services/noticias.service';
-import { Article } from '../../interfaces/interfaces';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { Doc } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-tab1',
@@ -9,8 +8,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  noticias: Article[] = [];
-  // @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  noticias: Doc[] = [];
 
   constructor(private noticiasService: NoticiasService) { }
 
@@ -24,12 +22,12 @@ export class Tab1Page implements OnInit {
 
   cargarNoticias(event?: any) {
     this.noticiasService.getTopHeadlines().subscribe(res => {
-      if (res.articles.length > 0) {
-        this.noticias.push(...res.articles);
+      if (res.response.docs.length > 0) {
+        this.noticias.push(...res.response.docs);
       }
       if (event) {
         event.target.complete();
-        event.target.disabled = (res.articles.length === 0);
+        event.target.disabled = (res.response.docs.length === 0);
       }
     });
   }

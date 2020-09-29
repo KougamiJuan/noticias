@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Article } from '../../interfaces/interfaces';
+import { Doc } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-noticias',
@@ -7,7 +7,7 @@ import { Article } from '../../interfaces/interfaces';
   styleUrls: ['./noticias.component.scss'],
 })
 export class NoticiasComponent implements OnInit {
-  @Input() noticias: Article[] = [];
+  @Input() noticias: Doc[] = [];
 
   constructor() { }
 

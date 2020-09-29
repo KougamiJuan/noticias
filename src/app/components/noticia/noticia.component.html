@@ -2,12 +2,13 @@
   <ion-card-header>
     <ion-card-subtitle>
       <span class="text-primary">{{indice + 1}}. </span>
-      <span class="noticia-source-name">{{noticia.source.name}}</span>
+      <span class="noticia-source-name">{{noticia.news_desk}}</span>
     </ion-card-subtitle>
-    <ion-card-title (click)="abrirNoticia()">{{noticia.title}}</ion-card-title>
+    <ion-card-title (click)="abrirNoticia()">{{noticia.headline.main}}</ion-card-title>
   </ion-card-header>
-  <img *ngIf="!!noticia.urlToImage" (click)="abrirNoticia()" [src]="noticia.urlToImage" alt="news image">
+  <img *ngIf="!!noticia.multimedia && noticia.multimedia.length > 0" (click)="abrirNoticia()"
+    [src]="'http://www.nytimes.com/' + noticia.multimedia[0].url" alt="news image">
   <ion-card-content>
-    {{noticia.description}}
+    {{noticia.lead_paragraph}}
   </ion-card-content>
 </ion-card>

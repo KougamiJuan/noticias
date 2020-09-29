@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Doc, Multimedia } from '../../interfaces/interfaces';
+import { Doc } from '../../interfaces/interfaces';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { DataLocalService } from '../../services/data-local.service';
 
 @Component({
   selector: 'app-noticia',
@@ -13,10 +14,12 @@ export class NoticiaComponent implements OnInit {
   originDomian = 'http://www.nytimes.com/';
   @Input() noticia: Doc;
   @Input() indice: number;
+  @Input() enFavoritos;
 
   constructor(
     private iab: InAppBrowser,
     private socialSharing: SocialSharing,
+    private dataLocalService: DataLocalService,
     private actionSheetController: ActionSheetController
   ) { }
 
@@ -27,13 +30,33 @@ export class NoticiaComponent implements OnInit {
   }
 
   async lanzarMenu() {
+    let guardarBorrarBtn: any;
+    if (this.enFavoritos) {
+      guardarBorrarBtn = {
+        text: 'Delete Favorite',
+        icon: 'trash',
+        cssClass: 'action-custom',
+        handler: () => {
+          this.dataLocalService.borrarNoticia(this.noticia);
+        }
+      };
+    } else {
+      guardarBorrarBtn = {
+        text: 'Favorite',
+        icon: 'star',
+        cssClass: 'action-custom',
+        handler: () => {
+          this.dataLocalService.guardarNoticia(this.noticia);
+        }
+      };
+    }
+
     const actionSheet = await this.actionSheetController.create({
       buttons: [{
         text: 'Share',
         icon: 'share-social',
         cssClass: 'action-custom',
         handler: () => {
-          console.log('Share clicked');
           this.socialSharing.share(
             this.noticia.headline.main,
             this.noticia.news_desk,
@@ -41,21 +64,14 @@ export class NoticiaComponent implements OnInit {
             this.noticia.web_url
           );
         }
-      }, {
-        text: 'Favorite',
-        icon: 'star',
-        cssClass: 'action-custom',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
+      },
+        guardarBorrarBtn,
+      {
         text: 'Cancel',
         icon: 'close',
         cssClass: 'action-custom',
         role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
+        handler: () => {}
       }]
     });
     await actionSheet.present();

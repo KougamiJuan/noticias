@@ -11,7 +11,6 @@ import { DataLocalService } from '../../services/data-local.service';
   styleUrls: ['./noticia.component.scss'],
 })
 export class NoticiaComponent implements OnInit {
-  originDomian = 'http://www.nytimes.com/';
   @Input() noticia: Doc;
   @Input() indice: number;
   @Input() enFavoritos;

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Doc } from '../../interfaces/interfaces';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DataLocalService } from '../../services/data-local.service';
 
@@ -17,6 +17,7 @@ export class NoticiaComponent implements OnInit {
 
   constructor(
     private iab: InAppBrowser,
+    private platform: Platform,
     private socialSharing: SocialSharing,
     private dataLocalService: DataLocalService,
     private actionSheetController: ActionSheetController
@@ -56,12 +57,7 @@ export class NoticiaComponent implements OnInit {
         icon: 'share-social',
         cssClass: 'action-custom',
         handler: () => {
-          this.socialSharing.share(
-            this.noticia.headline.main,
-            this.noticia.news_desk,
-            '',
-            this.noticia.web_url
-          );
+          this.compartirNoticia();
         }
       },
         guardarBorrarBtn,
@@ -70,10 +66,34 @@ export class NoticiaComponent implements OnInit {
         icon: 'close',
         cssClass: 'action-custom',
         role: 'cancel',
-        handler: () => {}
+        handler: () => { }
       }]
     });
     await actionSheet.present();
+  }
+
+  compartirNoticia() {
+
+    if (this.platform.is('cordova')) {
+      this.socialSharing.share(
+        this.noticia.headline.main,
+        this.noticia.news_desk,
+        '',
+        this.noticia.web_url
+      );
+    } else {
+      if (navigator.share) {
+        navigator.share({
+          title: this.noticia.headline.main,
+          text: this.noticia.news_desk,
+          url: this.noticia.web_url,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      } else {
+        console.log('No Support');
+      }
+    }
   }
 
 }
